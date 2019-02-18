@@ -1,5 +1,4 @@
-# Theileria-orientalis-illumina-and-nanopore-reads
-
+# Evaluation of Theileria orientalis genome assembly methods using nanopore sequencing and analysis of variation between genomes
 This repository contains:
 1) all codes and commands used in the methodology
 2) supplementary results
