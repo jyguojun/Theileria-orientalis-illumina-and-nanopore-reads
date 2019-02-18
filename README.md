@@ -9,32 +9,39 @@ This repository contains:
 
 ## Commands used in this chapter
 
-### basecalling nanopore reads
+### Basecalling nanopore reads
 **[Albacore](https://community.nanoporetech.com/protocols/albacore-offline-basecalli/v/abec_2003_v1_revan_29nov2016/linux)** (Requires Nanopore account)
+
 `read_fast5_basecaller.py -i fast5_input_directory -s output_directory -f FLO-MIN106 -k SQK-LSK108 -o fastq -t 24`
 
 ### Trimming nanopore reads
-**[Porechop](https://github.com/rrwick/Porechop)
+**[Porechop](https://github.com/rrwick/Porechop)**
+
 `porechop -i input_albacore_reads.fastq -o output_porechopped_reads.fastq`
 
 ### Long read assembly (Nanopore reads only)
 **[Canu](https://github.com/marbl/canu)**
+
 `canu -p output_prefix -d canu_output_directory genomeSize=9.0m -nanopore-raw albacore_reads.fastq useGrid=false`
 
-**[Flye](https://github.com/fenderglass/Flye)** 
+**[Flye](https://github.com/fenderglass/Flye)**
+
 Normal coverage:
-`flye --nano-raw albacore_reads.fastq -g 9m -o flye_output_directory -i 5 -t 24 
+
+`flye --nano-raw albacore_reads.fastq -g 9m -o flye_output_directory -i 5 -t 24`
 
 40X reduced coverage for initial contig assembly:
-`flye --nano-raw albacore_reads.fastq -g 9m -o flye_output_directory_40x -i 5 -t 24 --asm-coverage 40
+
+`flye --nano-raw albacore_reads.fastq -g 9m -o flye_output_directory_40x -i 5 -t 24 --asm-coverage 40`
 
 ### Hybrid assembly (Nanopore and illumina reads)
 **[Unicycler](https://github.com/rrwick/Unicycler)**
+
 `unicycler -1 illumina_1.fastq -2 illumina_2.fastq -l porechopped_reads.fastq -o output_directory --linear_seqs 6 -t 24`
 
 **[Masurca](https://github.com/alekseyzimin/masurca)**
-Masurca requires a configuration file to run (use # to ignore parameters in configuration file).
-To run Masurca `bash assemble.sh`, use the shell script `assemble.sh` generated from `masurca configuration_file`
+
+Masurca requires a configuration file to run (use # to ignore parameters in configuration file). To run Masurca `bash assemble.sh`, use the shell script `assemble.sh` generated from `masurca configuration_file`
 
 Example of the configuration file used in this assembly:
 ```
@@ -103,9 +110,14 @@ END
 Only Flye assemblies were subjected to polishing. To polish the reads, a combination of programs (**[BWA](https://github.com/lh3/bwa)**, **[Nanopolish](https://github.com/jts/nanopolish)** and **[Pilon](https://github.com/broadinstitute/pilon)** were used. 
 
 `nanopolish index -d fast5_files_directory albacore_reads.fasta`
+
 `bwa index flye_scaffolds.fasta`
-`bwa mem -x ont2d -t 20 flye_scaffolds.fasta albacore_reads.fasta | samtools sort -o reads.sorted.bam -T reads.tmp
+
+`bwa mem -x ont2d -t 20 flye_scaffolds.fasta albacore_reads.fasta | samtools sort -o reads.sorted.bam -T reads.tmp`
+
 `samtools index reads.sorted.bam`
+
 `python nanopolish_makerange.py flye_scaffolds.fasta | parallel --results nanopolish.results -P 8 \
 	nanopolish variants --consensus -o flye_assembly.polished.{1}.vcf -w {1} -r albacore_reads.fasta -g flye_scaffolds.fasta -b reads.sorted.bam -t 6 --min-candidate-frequency 0.1 -q dcm,dam`
+
 `nanopolish vcf2fasta -g flye_scaffolds.fasta flye_assembly.polished.*.vcf > ikeda_flye_polished_genome.fa`
