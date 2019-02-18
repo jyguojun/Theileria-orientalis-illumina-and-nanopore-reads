@@ -40,7 +40,7 @@ Normal coverage:
 
 **[Masurca](https://github.com/alekseyzimin/masurca)**
 
-Masurca requires a configuration file to run (use # to ignore parameters in configuration file). To run Masurca `bash assemble.sh`, use the shell script `assemble.sh` generated from `masurca configuration_file`
+Masurca requires a configuration file to run (use # to ignore parameters in configuration file). A shell script `assemble.sh` will be generated from the command, `masurca configuration_file`. To run the shell script, use `bash assemble.sh`.
 
 Example of the configuration file used in this assembly:
 ```
