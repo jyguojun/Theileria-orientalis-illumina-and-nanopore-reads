@@ -106,7 +106,7 @@ END
 ```
 
 ### Polishing reads(Nanopore and illumina reads)
-Only Flye assemblies were subjected to polishing. To polish the reads, a combination of programs (**[BWA](https://github.com/lh3/bwa)**, **[Nanopolish](https://github.com/jts/nanopolish)** and **[Pilon](https://github.com/broadinstitute/pilon)** were used. 
+Only Flye assemblies were subjected to polishing. To polish the reads, a combination of tools (**[BWA](https://github.com/lh3/bwa)**, **[Nanopolish](https://github.com/jts/nanopolish)** and **[Pilon](https://github.com/broadinstitute/pilon)**) were used. 
 
 `nanopolish index -d fast5_files_directory albacore_reads.fasta`
 
@@ -116,7 +116,7 @@ Only Flye assemblies were subjected to polishing. To polish the reads, a combina
 
 `samtools index reads.sorted.bam`
 
-`python nanopolish_makerange.py flye_scaffolds.fasta | parallel --results nanopolish.results -P 8 \
-	nanopolish variants --consensus -o flye_assembly.polished.{1}.vcf -w {1} -r albacore_reads.fasta -g flye_scaffolds.fasta -b reads.sorted.bam -t 6 --min-candidate-frequency 0.1 -q dcm,dam`
+```python nanopolish_makerange.py flye_scaffolds.fasta | parallel --results nanopolish.results -P 8 \
+	nanopolish variants --consensus -o flye_assembly.polished.{1}.vcf -w {1} -r albacore_reads.fasta -g flye_scaffolds.fasta -b reads.sorted.bam -t 6 --min-candidate-frequency 0.1 -q dcm,dam```
 
 `nanopolish vcf2fasta -g flye_scaffolds.fasta flye_assembly.polished.*.vcf > ikeda_flye_polished_genome.fa`
