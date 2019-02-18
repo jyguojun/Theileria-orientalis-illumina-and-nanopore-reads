@@ -1,1 +1,10 @@
 # Theileria-orientalis-illumina-and-nanopore-reads
+
+This repository contains:
+1) all codes and commands used in the methodology
+2) supplementary results
+
+## Abstract
+*Theileria orientalis* (Apicomplexa: Piroplasmida) is a non-lymphocyte transforming tick-borne haemoparasite of cattle that causes ill-thrift and anaemia. In recent years, clinical outbreaks of *T. orientalis* caused by the pathogenic genotype of this parasite (Ikeda) have been increasingly observed throughout the Asia Pacific.  Currently, there are no  available vaccines for this disease, although a live vaccine based on a benign genotype (Buffeli) has been proposed to provide cross-protection against Ikeda. However, our recent genomic studies using illumina short reads of three *T. orientalis* genotypes, Ikeda, Buffeli and a low pathogenic genotype (Chitose) have revealed substantial genetic divergence, perhaps at the species level. As short read technology is unable to effectively resolve the structure of the genomes, we continued to investigate the isolates using previously generated Illumina short reads combined with nanopore long reads. In this study, we sequenced the three isolates with a R9.4.1 MinION flow cell and tested four different hybrid assembly methods, Flye, Canu, Unicycler and Masurca. Flye and Canu assemblies were further processed with Nanopolish and five iterations of Pilon using Illumina reads. Different combinations of the assemblers were trialed and evaluated in order to determine the best pipeline for *T. orientalis* genome assembly. Evaluations with Quast and MUMmer revealed Unicycler to be the best assembler for *T. orientalis* Ikeda, and Flye for genotypes, Chitose and Buffeli. Alignments to the *T. orientalis* (Shintoku) reference sequence revealed potential structural variation in the apathogenic Buffeli genotype. The detailed methodology and results from this study will be presented and discussed, including the genome annotation and findings of the variation between the pathogenic and apathogenic *T. orientalis* types.
+
+## Commands used in this chapter
